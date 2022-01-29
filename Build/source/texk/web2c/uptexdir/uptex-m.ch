@@ -1,4 +1,4 @@
-% This is a change file for upTeX u1.21
+% This is a change file for upTeX u1.23
 % By Takuji Tanaka.
 %
 % (02/26/2007) TTK  upTeX u0.01
@@ -35,19 +35,22 @@
 % (12/29/2014) TTK  upTeX u1.20
 % (02/20/2016) TTK  upTeX u1.21
 % (01/15/2017) TTK  upTeX u1.22
+% (04/09/2017) TTK  Hironori Kitagawa fixed a bug in \endlinechar.
+% (2018-01-21) HK   Added \uptexversion primitive and co.
+% (2018-02-24) TTK  upTeX u1.23
 
 @x upTeX: banner
-  {printed when p\TeX\ starts}
+  {printed when \pTeX\ starts}
 @y
-  {printed when p\TeX\ starts}
+  {printed when \pTeX\ starts}
 @#
 @d upTeX_version=1
-@d upTeX_revision==".22"
-@d upTeX_version_string=='-u1.22' {current up\TeX\ version}
+@d upTeX_revision==".23"
+@d upTeX_version_string=='-u1.23' {current u\pTeX\ version}
 @#
 @d upTeX_banner=='This is upTeX, Version 3.14159265',pTeX_version_string,upTeX_version_string
 @d upTeX_banner_k==upTeX_banner
-  {printed when up\TeX\ starts}
+  {printed when u\pTeX\ starts}
 @z
 
 @x upTeX: banner
@@ -71,7 +74,7 @@
 @!trick_buf2:array[0..ssup_error_line] of 0..@'24; {pTeX: buffer for KANJI}
 @!kcode_pos: 0..@'24; {pTeX: denotes whether first byte or second byte of KANJI
   1..2:2byte-char, 11..13:3byte-char, 21..24:4byte-char}
-@!kcp: 0..@'24; {temporary kcode_pos}
+@!kcp: 0..@'24; {temporary |kcode_pos|}
 @z
 
 @x
@@ -144,16 +147,6 @@ if (kcode_pos=1)or((kcode_pos>=@'11)and(kcode_pos<=@'12))
 @d min_halfword=-@"3FFFFFFF {smallest allowable value in a |halfword|}
 @d max_halfword=@"3FFFFFFF {largest allowable value in a |halfword|}
 @d max_cjk_val=@"1000000 {to separate wchar and kcatcode}
-@z
-
-@x
-@d xspace_ptr(#) == info(#+space_offset)
-@y
-@d xspace_ptr(#) == info(#+space_offset)
-@d read_sixteenx(#)==begin #:=fbyte;
-  if #>255 then abort;
-  fget; #:=#*@'400+fbyte;
-  end
 @z
 
 @x
@@ -244,24 +237,27 @@ for k:=0 to 511 do
 { $\.{@@"20}+|k| = |kcatcodekey|(|fromKUTEN|(|HILO|(k,1))$ }
 @y
 if (isinternalUPTEX) then begin
-  { default: other_kchar }
+  { default: |other_kchar| }
   @t\hskip10pt@>kcat_code(@"0):=not_cjk;
-  @t\hskip10pt@>kcat_code(@"23):=hangul; { Hangul Jamo }
-  @+@t\1@>for k:=@"65 to @"67 do kcat_code(k):=kanji; { CJK Radicals Supplement .. Ideographic Description Characters }
-  @+@t\1@>for k:=@"69 to @"6A do kcat_code(k):=kana;  { Hiragana, Katakana }
-  @t\hskip10pt@>kcat_code(@"6B):=kanji; { Bopomofo }
-  @t\hskip10pt@>kcat_code(@"6C):=hangul; { Hangul Compatibility Jamo }
-  @+@t\1@>for k:=@"6D to @"6F do kcat_code(k):=kanji; { Kanbun .. CJK Strokes }
-  @t\hskip10pt@>kcat_code(@"70):=kana; { Katakana Phonetic Extensions }
-  @t\hskip10pt@>kcat_code(@"73):=kanji; { CJK Unified Ideographs Extension A }
-  @t\hskip10pt@>kcat_code(@"75):=kanji; { CJK Unified Ideographs }
-  @t\hskip10pt@>kcat_code(@"85):=hangul; { Hangul Jamo Extended-A }
-  @t\hskip10pt@>kcat_code(@"90):=hangul; { Hangul Syllables }
-  @t\hskip10pt@>kcat_code(@"91):=hangul; { Hangul Jamo Extended-B }
-  @t\hskip10pt@>kcat_code(@"96):=kanji; { CJK Compatibility Ideographs }
-  { @t\hskip10pt@>kcat_code(@"9F):=other_kchar; Halfwidth and Fullwidth Forms }
-  @t\hskip10pt@>kcat_code(@"ED):=kana; { Kana Supplement }
-  @+@t\1@>for k:=@"108 to @"10C do kcat_code(k):=kanji; { CJK Unified Ideographs Extension B .. CJK Compatibility Ideographs Supplement }
+  @t\hskip10pt@>kcat_code(@"2):=not_cjk; { Latin Extended-A }
+  @t\hskip10pt@>kcat_code(@"24):=hangul; { Hangul Jamo }
+  @+@t\1@>for k:=@"66 to @"68 do kcat_code(k):=kanji; { CJK Radicals Supplement .. Ideographic Description Characters }
+  @+@t\1@>for k:=@"6A to @"6B do kcat_code(k):=kana;  { Hiragana, Katakana }
+  @t\hskip10pt@>kcat_code(@"6C):=kanji; { Bopomofo }
+  @t\hskip10pt@>kcat_code(@"6D):=hangul; { Hangul Compatibility Jamo }
+  @+@t\1@>for k:=@"6E to @"70 do kcat_code(k):=kanji; { Kanbun .. CJK Strokes }
+  @t\hskip10pt@>kcat_code(@"71):=kana; { Katakana Phonetic Extensions }
+  @t\hskip10pt@>kcat_code(@"74):=kanji; { CJK Unified Ideographs Extension A }
+  @t\hskip10pt@>kcat_code(@"76):=kanji; { CJK Unified Ideographs }
+  @t\hskip10pt@>kcat_code(@"86):=hangul; { Hangul Jamo Extended-A }
+  @t\hskip10pt@>kcat_code(@"91):=hangul; { Hangul Syllables }
+  @t\hskip10pt@>kcat_code(@"92):=hangul; { Hangul Jamo Extended-B }
+  @t\hskip10pt@>kcat_code(@"97):=kanji; { CJK Compatibility Ideographs }
+  { \hskip10pt|kcat_code(@"A0):=other_kchar;| Halfwidth and Fullwidth Forms }
+  @t\hskip10pt@>kcat_code(@"F1):=kana; { Kana Supplement }
+  @t\hskip10pt@>kcat_code(@"F2):=kana; { Kana Extended-A }
+  @+@t\1@>for k:=@"10E to @"113 do kcat_code(k):=kanji; { CJK Unified Ideographs Extension B .. CJK Compatibility Ideographs Supplement }
+  @t\hskip10pt@>kcat_code(@"1FD):=not_cjk; { Latin-1 Letters }
   @t\hskip10pt@>kcat_code(@"1FE):=kana; { Fullwidth digit and latin alphabet }
   @t\hskip10pt@>kcat_code(@"1FF):=kana; { Halfwidth katakana }
 end else begin
@@ -309,7 +305,7 @@ token that stands for a control sequence; is a multiple of~256, less~1}
 @d end_match_token=@'7000 {$2^8\cdot|end_match|$}
 @y
 @d cs_token_flag=@"1FFFFFFF {amount added to the |eqtb| location in a
-  token that stands for a control sequence; is a multiple of~@"1000000, less~1}
+  token that stands for a control sequence; is a multiple of~@@"1000000, less~1}
 @d max_char_val=@"100 {to separate char and command code}
 @d left_brace_token=@"100 {$2^8\cdot|left_brace|$}
 @d left_brace_limit=@"200 {$2^8\cdot(|left_brace|+1)$}
@@ -390,11 +386,11 @@ if ((kcp mod @'10)>0)and(nrestmultichr(kcp)>0) then p:=p-(kcp mod @'10);
     else reswitch: cur_cmd:=cat_code(cur_chr);
 @y
   begin
-    cur_chr:=fromBUFF(ustringcast(buffer), limit, loc);
+    cur_chr:=fromBUFF(ustringcast(buffer), limit+1, loc);
     cur_cmd:=kcat_code(kcatcodekey(cur_chr));
-    if (multistrlen(ustringcast(buffer), limit, loc)>1) and check_kcat_code(cur_cmd) then begin
+    if (multistrlen(ustringcast(buffer), limit+1, loc)>1) and check_kcat_code(cur_cmd) then begin
       if (cur_cmd=not_cjk) then cur_cmd:=other_kchar;
-      loc:=loc+multistrlen(ustringcast(buffer), limit, loc) end
+      loc:=loc+multistrlen(ustringcast(buffer), limit+1, loc) end
     else begin
       cur_chr:=buffer[loc]; incr(loc);
       reswitch: cur_cmd:=cat_code(cur_chr);
@@ -432,11 +428,11 @@ start_cs:
   if (cat=letter)or(cat=kanji)or(cat=kana) then state:=skip_blanks
 @y
 else  begin k:=loc;
-  cur_chr:=fromBUFF(ustringcast(buffer), limit, k);
+  cur_chr:=fromBUFF(ustringcast(buffer), limit+1, k);
   cat:=kcat_code(kcatcodekey(cur_chr));
-  if (multistrlen(ustringcast(buffer), limit, k)>1) and check_kcat_code(cat) then begin
+  if (multistrlen(ustringcast(buffer), limit+1, k)>1) and check_kcat_code(cat) then begin
     if (cat=not_cjk) then cat:=other_kchar;
-    k:=k+multistrlen(ustringcast(buffer), limit, k) end
+    k:=k+multistrlen(ustringcast(buffer), limit+1, k) end
   else begin {not multi-byte char}
     cur_chr:=buffer[k];
     cat:=cat_code(cur_chr);
@@ -453,6 +449,12 @@ start_cs:
 @z
 
 @x
+  if (cat=kanji)or(cat=kana) then
+@y
+  if (cat=kanji)or(cat=kana)or(cat=hangul) then
+@z
+
+@x
 begin repeat cur_chr:=buffer[k]; incr(k);
   if multistrlen(ustringcast(buffer), limit+1, k-1)=2 then
     begin cat:=kcat_code(kcatcodekey(fromBUFF(ustringcast(buffer), limit+1, k-1))); incr(k);
@@ -460,11 +462,11 @@ begin repeat cur_chr:=buffer[k]; incr(k);
   else cat:=cat_code(cur_chr);
 @y
 begin repeat
-  cur_chr:=fromBUFF(ustringcast(buffer), limit, k);
+  cur_chr:=fromBUFF(ustringcast(buffer), limit+1, k);
   cat:=kcat_code(kcatcodekey(cur_chr));
-  if (multistrlen(ustringcast(buffer), limit, k)>1) and check_kcat_code(cat) then begin
+  if (multistrlen(ustringcast(buffer), limit+1, k)>1) and check_kcat_code(cat) then begin
     if (cat=not_cjk) then cat:=other_kchar;
-    k:=k+multistrlen(ustringcast(buffer), limit, k) end
+    k:=k+multistrlen(ustringcast(buffer), limit+1, k) end
   else begin {not multi-byte char}
     cur_chr:=buffer[k];
     cat:=cat_code(cur_chr);
@@ -554,6 +556,37 @@ char_given,math_given: scanned_result(cur_chr)(int_val);
 @z
 
 @x
+@d ptex_minor_version_code=ptex_version_code+1 {code for \.{\\ptexminorversion}}
+@y
+@d ptex_minor_version_code=ptex_version_code+1 {code for \.{\\ptexminorversion}}
+@d uptex_version_code=ptex_minor_version_code+1 {code for \.{\\uptexversion}}
+@z
+
+@x
+primitive("ptexversion",last_item,ptex_version_code);
+@!@:ptexversion_}{\.{\\ptexversion} primitive@>
+@y
+primitive("ptexversion",last_item,ptex_version_code);
+@!@:ptexversion_}{\.{\\ptexversion} primitive@>
+primitive("uptexversion",last_item,uptex_version_code);
+@!@:uptexversion_}{\.{\\uptexversion} primitive@>
+@z
+
+@x
+  ptex_version_code: print_esc("ptexversion");
+@y
+  ptex_version_code: print_esc("ptexversion");
+  uptex_version_code: print_esc("uptexversion");
+@z
+
+@x
+    ptex_version_code: cur_val:=pTeX_version;
+@y
+    ptex_version_code: cur_val:=pTeX_version;
+    uptex_version_code: cur_val:=upTeX_version;
+@z
+
+@x
   if (cur_cmd=kanji)or(cur_cmd=kana)or(cur_cmd=other_kchar) then {|wchar_token|}
 @y
   if (cur_cmd>=kanji)and(cur_cmd<=hangul) then {|wchar_token|}
@@ -593,10 +626,14 @@ while k<pool_ptr do
 @z
 
 @x
-@d ptex_convert_codes=10 {end of \pTeX's command codes}
+
+@d ptex_revision_code=10 {command code for \.{\\ptexrevision}}
+@d ptex_convert_codes=11 {end of \pTeX's command codes}
 @y
 @d ucs_code=10 {command code for \.{\\ucs}}
-@d ptex_convert_codes=11 {end of \pTeX's command codes}
+@d ptex_revision_code=11 {command code for \.{\\ptexrevision}}
+@d uptex_revision_code=12 {command code for \.{\\uptexrevision}}
+@d ptex_convert_codes=13 {end of \pTeX's command codes}
 @z
 
 @x
@@ -608,6 +645,16 @@ primitive("ucs",convert,ucs_code);
 @z
 
 @x
+primitive("ptexrevision",convert,ptex_revision_code);
+@!@:ptexrevision_}{\.{\\ptexrevision} primitive@>
+@y
+primitive("ptexrevision",convert,ptex_revision_code);
+@!@:ptexrevision_}{\.{\\ptexrevision} primitive@>
+primitive("uptexrevision",convert,uptex_revision_code);
+@!@:uptexrevision_}{\.{\\uptexrevision} primitive@>
+@z
+
+@x
   kuten_code:print_esc("kuten");
 @y
   kuten_code:print_esc("kuten");
@@ -615,12 +662,21 @@ primitive("ucs",convert,ucs_code);
 @z
 
 @x
+  ptex_revision_code:print_esc("ptexrevision");
+@y
+  ptex_revision_code:print_esc("ptexrevision");
+  uptex_revision_code:print_esc("uptexrevision");
+@z
+
+@x
 kansuji_code,euc_code,sjis_code,jis_code,kuten_code: scan_int;
+ptex_revision_code: do_nothing;
 string_code, meaning_code: begin save_scanner_status:=scanner_status;
   scanner_status:=normal; get_token;
   if (cur_cmd=kanji)or(cur_cmd=kana)or(cur_cmd=other_kchar) then {|wchar_token|}
 @y
 kansuji_code,euc_code,sjis_code,jis_code,kuten_code,ucs_code: scan_int;
+ptex_revision_code, uptex_revision_code: do_nothing;
 string_code, meaning_code: begin save_scanner_status:=scanner_status;
   scanner_status:=normal; get_token;
   if (cur_cmd>=kanji)and(cur_cmd<=hangul) then {|wchar_token|}
@@ -631,6 +687,13 @@ kuten_code: print_int(fromKUTEN(cur_val));
 @y
 kuten_code: print_int(fromKUTEN(cur_val));
 ucs_code:   print_int(fromUCS(cur_val));
+@z
+
+@x
+ptex_revision_code: print(pTeX_revision);
+@y
+ptex_revision_code: print(pTeX_revision);
+uptex_revision_code: print(upTeX_revision);
 @z
 
 @x
@@ -660,12 +723,6 @@ if (cur_cmd>=kanji)and(cur_cmd<=hangul) then
     if BYTE2(cur_chr)<>0 then append_char(BYTE2(cur_chr));
     if BYTE3(cur_chr)<>0 then append_char(BYTE3(cur_chr));
                               append_char(BYTE4(cur_chr));
-@z
-
-@x
-    fget; read_sixteen(cx); font_info[k].hh.rh:=tokanji(cx); {|kchar_code|}
-@y
-    fget; read_sixteenx(cx); font_info[k].hh.rh:=tokanji(cx); {|kchar_code|}
 @z
 
 @x
@@ -1125,12 +1182,8 @@ begin if is_char_node(link(p)) then
 @z
 
 @x
-    begin fast_get_avail(main_p); font(main_p):=main_f; character(main_p):=cur_l;
-    link(tail):=main_p; tail:=main_p; last_jchr:=tail;
     fast_get_avail(main_p); info(main_p):=KANJI(cur_chr);
 @y
-    begin fast_get_avail(main_p); font(main_p):=main_f; character(main_p):=cur_l;
-    link(tail):=main_p; tail:=main_p; last_jchr:=tail;
     fast_get_avail(main_p); info(main_p):=KANJI(cur_chr)+cur_cmd*max_cjk_val;
 @z
 
