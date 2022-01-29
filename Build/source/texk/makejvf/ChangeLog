@@ -1,0 +1,30 @@
+2011-04-19  Peter Breitenlohner  <peb@mppmu.mpg.de>
+
+	Avoid 'differ in signedness' warnings.
+	* tfmread.c (header, char_type, char_info): Declare as unsigned.
+
+2010-05-01  Peter Breitenlohner  <peb@mppmu.mpg.de>
+
+	* makejvf.test (new): Shell script for 'make check' test.
+	* tests/[t]min10.{tfm,vf}, tests/rml[v].tfm (new): Test data.
+	* Makefile.am: Adjust.
+
+2010-04-16  Peter Breitenlohner  <peb@mppmu.mpg.de>
+
+	* write.c (writevf): Initialize height.  From Sadayuki Tanaka
+	<s-tanaka@asciimw.jp>, 16 Apr 2010 16:30:22.
+
+2010-04-15  Peter Breitenlohner  <peb@mppmu.mpg.de>
+
+	* tool.c: #include "makejvf.h" for prototypes.
+	(utri, tri, pair, mget, uftri, ftri, fskip, cutspace, gethex,
+	getdec): Don't compile unused functions.
+	(fputnum): Drop unused local variable.
+	* tfmread.c (tfmget): Drop unused local variables.
+	* makejvf.h, write.c: Change return type of vfclose() and
+	maketfm() from int to void.
+
+2010-04-12  Peter Breitenlohner  <peb@mppmu.mpg.de>
+
+	* Makefile: Renamed => Makefile.orig.
+	* Makefile.am (EXTRA_DIST): Add Makefile.orig.
