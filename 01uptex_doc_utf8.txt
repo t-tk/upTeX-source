@@ -1,5 +1,5 @@
 upTeX, upLaTeX  --- 内部unicode版 pTeX, pLaTeX の実装
-2014.12.29 Ver1.20
+2016.02.20 Ver1.21
 TANAKA, Takuji   ttk(at)t-lab(dot)opal(dot)ne(dot)jp
 
 ◇ upTeX開発のねらい
@@ -435,9 +435,8 @@ CMap UTF8-UTF16
   TeX Live svn に r26540 で取り込まれた。
 ◎ TeX Live に取り込んでいただいたもの
 ptexenc  TeX Live svn に r23549〜r25028 あたりで取り込まれた。
-  ほぼ動いているが、一部機能していないまま放置。
-  合成文字の扱いが動いていない。
   JIS→Unicode の変換表は r29213 で見直した。
+  かなの合成文字は r38704 で取り込まれた。
 euptex    TeX Live の Build/source/web2c で本配布の uptexdir の置き換えでOK
   euptexdir 以下は新しい uptex との組合わせ可能で euptex が作成出来る。
 dvips     TeX Live 2010 に取り込まれた。
@@ -454,17 +453,21 @@ dvi2tty   TeX Live svn に r24634 あたりで取り込まれた。
   TeX Liveへの取り込みを提案していたが、
   一旦取り下げ、upTeX packageとは別扱いとする。
 mendex    TeX Live r33962 あたりで、表記をUnicode対応とした。
-  読みは依然 JIS X 0208の範囲となっている。
+upmendex  mendex をベースに新規に作成した。
+  mendex の内部コードをUnicode化し、ICUによるソート、
+  読みをJIS X 0213のかなに対応、CJK対応、ラテン文字(含非英語)対応、
+  キリル文字対応、ギリシャ文字対応となっている。
+  TeX Live svn に r39638 あたりで取り込まれた。
 upmpost   TeX Live r35188 あたりでupmetapostの名前で取り込まれた。
   ただし、おそらくuptex-0.30の頃と同様、
   日本語vfの領域を食い過ぎで多書体ができないと思われる。
 otfパッケージ  otfbeta-uptex-x.xx.tar.xz として別に公開した。
   TeX Live svn に r25264 あたりで取り込まれた。
-  動いている。プロポーショナル仮名にも対応した。
+  プロポーショナル仮名にも対応済み。
   本文用 vf 作成のために mkjvf を Unicode 対応にして、
   vf を追加作成した。
 Unicodeのファイル名  Unix/LinuxではlocaleがUTF-8ならば使用出来る。
-  Windowsでは、TeX Live 2014 に取り込んだ。
+  Windowsでは、TeX Live 2014 に取り込まれた。
 ◎ 現在の配布に含んでいないもの
 xdvi      uptex-0.30ではset3も含めて動いている。無問題。
   uptex-1.xxの配布には含まない。
@@ -483,18 +486,16 @@ utfパッケージ  uptex-0.30では動いている。
 ◇ 今後の課題、要検討事項など
 < 内部実装関連 >
 [1] pdfTeX 拡張機能の追加は?
-< 周辺実装関連 >
-[2] ptexenc で合成文字を処理できるようにする。
 < dviware, 外部ソフト関連 >
-[3] upmetapost で多書体が使えるようにする。
-[4] upbibtex で、jalpha.bst 使用時に
+[2] upmetapost で多書体が使えるようにする。
+[3] upbibtex で、jalpha.bst 使用時に
   一部のエントリーでeuc動作と同等にならない問題点の解決。
 < フォント、マクロ関連 >
-[5] JIS→Unicode→CID の変換をupjis?-?.vfなど
+[4] JIS→Unicode→CID の変換をupjis?-?.vfなど
   に対してうまくいく形にする。
   JIS X 0208集合の横組はよくなったが、縦組の約物はまだ上手くいかない。
   vf と標準の CMap だけでは限界があり、 CMapの整備が必要。
 < その他 >
-[6] ドキュメントの充実。
-[7] 英語ドキュメントを書く。
+[5] ドキュメントの充実。
+[6] 英語ドキュメントを書く。
 

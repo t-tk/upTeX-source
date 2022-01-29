@@ -1,5 +1,32 @@
 ### ChangeLog / 変更履歴
 
+2016.02.20 Ver1.21-20160220a
+  TeXLive svn r39778 base
+  Build/source/texk/web2c/uptexdir:
+    * uptex-m.ch, uppltotf.ch, uptftopl.ch, updvitype.ch, upbibtex.ch,
+      uptex_version.h:
+      Update upTeX version number.
+    * uptex-m.ch, kanji.c:
+      Update reference of Unicode blocks to
+      "Blocks-8.0.0.txt Date: 2014-11-10, 23:04:00 GMT [KW]".
+    * COPYRIGHT.utf8:
+      Rename from COPYRIGHT.jis and convert encoding from ISO-2022-JP
+      to UTF-8.
+  Build/source/texk/makejvf:
+    * uniblock.c: Update references Unicode blocks Blocks-8.0.0.txt
+      and CMap files.
+    * main.c: Update version number.
+  Master/texmf-dist/source/fonts/uptex/jis:
+    * upjisr-{h,v}.pl, upjisr-h-hk.pl:
+      Update.
+  Master/texmf-dist/fonts/vf/uptex/jis:
+    * uptch{rm,gt}-{h,v}.vf:
+      Update.
+  Master/texmf-dist/fonts/cmap/uptex/UTF8-UTF16
+    Update to Ver1.002.
+  01uptex_doc_utf8.txt:
+    Update.
+
 2014.12.29 Ver1.20-20141229a
   TeXLive svn 35915 base
   Build/source/texk/web2c/uptexdir:
