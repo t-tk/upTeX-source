@@ -1,6 +1,13 @@
 ### ChangeLog / 変更履歴
 
-2012.01.15 Ver1.00
+2012.01.18 Ver1.00-20120118a
+  Master/texmf-dist/fonts/vf/uptex/jis/*.vf:
+    * In Ver1.00-20120115a,
+      Master/texmf-dist/fonts/vf/uptex/jis/*.vf was obsolete virtual fonts.
+      Master/texmf-dist/fonts/tfm/uptex/jis/*.vf was latest ones.
+      New *.vf are now set in Master/texmf-dist/fonts/vf/uptex/jis/ .
+
+2012.01.15 Ver1.00-20120115a
   TeXLive svn r25043 base
   Build/source/texk/web2c/uptexdir:
     * uptex-m.ch, uppltotf.ch uptftopl.ch, updvitype.ch, upbibtex.ch:
