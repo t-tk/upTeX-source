@@ -1,9 +1,9 @@
+#include <kpathsea/kpathsea.h>
+#include "makejvf.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include <kpathsea/kpathsea.h>
-#include "makejvf.h"
 
 int nt,unit,zh,zw,jfm_id;
 int *width,*height,*depth,*italic,*glue_kern,*kern,*glue,*param;
@@ -52,16 +52,16 @@ int tfmget(char *name)
 
 int tfmidx(FILE *fp)
 {
-	int i,cc;
+	int i;
 	int lh,ec,nw,nh,nd,ni,nl,nk,ng,np;
 
 	jfm_id = fpair(fp);
 
 	if ((jfm_id == 9) || (jfm_id == 11)) {
 		nt = ufpair(fp);
-		cc = fpair(fp);
+		     fpair(fp);
 		lh = ufpair(fp);
-		cc = fpair(fp);
+		     fpair(fp);
 		ec = ufpair(fp);
 		nw = ufpair(fp);
 		nh = ufpair(fp);

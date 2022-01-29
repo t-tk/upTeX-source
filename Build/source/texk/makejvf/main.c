@@ -1,11 +1,11 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include <kpathsea/kpathsea.h>
 #include <ptexenc/ptexenc.h>
 #include "makejvf.h"
 #include "uniblock.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 FILE *vfp,*afp=NULL;
 char *atfmname,*vtfmname,*afmname,*vfname,*kanatfm,*jistfm,*ucsqtfm;
@@ -166,7 +166,7 @@ int main(int argc, char ** argv)
 
 void usage(void)
 {
-	fputs2("MAKEJVF ver.1.1a-u1.10 -- make Japanese VF file.\n", stderr);
+	fputs2("MAKEJVF ver.1.1a-u1.20 -- make Japanese VF file.\n", stderr);
 	fputs2("%% makejvf [<options>] <TFMfile> <PSfontTFM>\n", stderr);
 	fputs2("options:\n", stderr);
 	fputs2("-C           長体モード\n", stderr);

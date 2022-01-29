@@ -1,9 +1,32 @@
 ### ChangeLog / 変更履歴
 
+2014.12.29 Ver1.20-20141229a
+  TeXLive svn 35915 base
+  Build/source/texk/web2c/uptexdir:
+    * uptex-m.ch, uppltotf.ch, uptftopl.ch, updvitype.ch, upbibtex.ch:
+      Update upTeX version number.
+    * uptex-m.ch, kanji.c:
+      Update reference of Unicode blocks to
+      "Blocks-7.0.0.txt Date: 2014-04-03, 23:23:00 GMT [RP, KW]".
+  Master/texmf-dist/fonts/cmap/uptex/UTF8-UTF16
+    Update to Ver1.001.
+  Master/source/uplatex/base, Master/source/platex/base:
+    * Move the position from Master/texmf-dist/tex/uplatex/base .
+  bin/convbkmk.rb:
+    Update to Ver0.10a:
+      Add -O option.
+      Make comments rd/rdtool friendly.
+      Fix bugs.
+      Update the author's mail address and web site.
+  samples:
+    Update.
+  01uptex_doc_utf8.txt:
+    Update.
+
 2012.09.21 Ver1.11-20120921a
   TeXLive svn 27750 base
   Build/source/texk/web2c/uptexdir:
-    * uptex-m.ch, uppltotf.ch uptftopl.ch, updvitype.ch, upbibtex.ch:
+    * uptex-m.ch, uppltotf.ch, uptftopl.ch, updvitype.ch, upbibtex.ch:
       Update upTeX version number.
     * uptex-m.ch:
       Fix bug for \meaning\kchardef
@@ -26,7 +49,7 @@
 2012.04.29 Ver1.10-20120429a
   TeXLive svn 26146 base
   Build/source/texk/web2c/uptexdir:
-    * uptex-m.ch, uppltotf.ch uptftopl.ch, updvitype.ch, upbibtex.ch:
+    * uptex-m.ch, uppltotf.ch, uptftopl.ch, updvitype.ch, upbibtex.ch:
       Update upTeX version number.
     * uptex-m.ch, kanji.c:
       Update reference of Unicode blocks to
@@ -61,7 +84,7 @@
 2012.01.15 Ver1.00-20120115a
   TeXLive svn r25043 base
   Build/source/texk/web2c/uptexdir:
-    * uptex-m.ch, uppltotf.ch uptftopl.ch, updvitype.ch, upbibtex.ch:
+    * uptex-m.ch, uppltotf.ch, uptftopl.ch, updvitype.ch, upbibtex.ch:
       Update upTeX version number.
     * uptex-m.ch, kanji.c:
       Update reference of Unicode blocks to

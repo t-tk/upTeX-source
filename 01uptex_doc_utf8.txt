@@ -1,6 +1,6 @@
 upTeX, upLaTeX  --- 内部unicode版 pTeX, pLaTeX の実装
-2012.09.21 Ver1.11
-TANAKA, Takuji  KXD02663(at)nifty(dot)ne(dot)jp
+2014.12.29 Ver1.20
+TANAKA, Takuji   ttk(at)t-lab(dot)opal(dot)ne(dot)jp
 
 ◇ upTeX開発のねらい
   ASCII pTeX/pLaTeXは、高品質の日本語組版ソフトウェアとして、いくつ
@@ -431,38 +431,41 @@ upjisr-h.tfmなど
 ukinsoku.tex  JIS X 0213 に対応した。
 convbkmk.rb   dvipsでのbookmark作成のためのrubyスクリプト。
   さらに、out2uni相当動作の-oオプションも追加した。
-dvi2tty   TeXLive svn に r24634 あたりで取り込まれた。
-  dvi2tty の NTT JTeX/pTeX 対応版を upTeX 対応にした。
-  オプション -J を変更し、 -U, -E を新設した。
-  さらにT1,TS1,OT2,T2A,T2B,T2C,X2エンコーディング対応にしたので、
-  今回TeXLiveへの取り込みを提案する。
-◎ TeXLive に取り込んでいただいたもの
-ptexenc  TeXLive svn に r23549〜r25028 あたりで取り込まれた。
+CMap UTF8-UTF16
+  TeX Live svn に r26540 で取り込まれた。
+◎ TeX Live に取り込んでいただいたもの
+ptexenc  TeX Live svn に r23549〜r25028 あたりで取り込まれた。
   ほぼ動いているが、一部機能していないまま放置。
   合成文字の扱いが動いていない。
-  JIS→Unicode の変換表の中身は再検討すべき。
-dvips     TeXLive 2010 に取り込まれた。
-dvipdfmx  TeXLive svn に r24509 あたりで取り込まれた。
+  JIS→Unicode の変換表は r29213 で見直した。
+euptex    TeX Live の Build/source/web2c で本配布の uptexdir の置き換えでOK
+  euptexdir 以下は新しい uptex との組合わせ可能で euptex が作成出来る。
+dvips     TeX Live 2010 に取り込まれた。
+dvipdfmx  TeX Live svn に r24509 あたりで取り込まれた。
   set3も含めて動いている。
   ただし、set3で、「内部コードがUTF-32, CMapがUniXXX-UTF16」であること
   を仮定したハードコーディングになっているおり、柔軟性は乏しい。
   bookmark 作成は UTF8-UCS2, UTF8-UTF16 の CMAP または、
   convbkmk.rbの-oオプションを必要とする。
-◎ 別の配布で提供しているもの
+dvi2tty   TeX Live svn に r24634 あたりで取り込まれた。
+  dvi2tty の NTT JTeX/pTeX 対応版を upTeX 対応にした。
+  オプション -J を変更し、 -U, -E を新設した。
+  さらにT1,TS1,OT2,T2A,T2B,T2C,X2エンコーディング対応にし、
+  TeX Liveへの取り込みを提案していたが、
+  一旦取り下げ、upTeX packageとは別扱いとする。
+mendex    TeX Live r33962 あたりで、表記をUnicode対応とした。
+  読みは依然 JIS X 0208の範囲となっている。
+upmpost   TeX Live r35188 あたりでupmetapostの名前で取り込まれた。
+  ただし、おそらくuptex-0.30の頃と同様、
+  日本語vfの領域を食い過ぎで多書体ができないと思われる。
 otfパッケージ  otfbeta-uptex-x.xx.tar.xz として別に公開した。
-  TeXLive svn に r25264 あたりで取り込まれた。
-  動いている。しかし、プロポーショナル仮名には未対応。
+  TeX Live svn に r25264 あたりで取り込まれた。
+  動いている。プロポーショナル仮名にも対応した。
   本文用 vf 作成のために mkjvf を Unicode 対応にして、
   vf を追加作成した。
-CMap UTF8-UTF16
-  TeXLive svn に r26540 で取り込まれた。
+Unicodeのファイル名  Unix/LinuxではlocaleがUTF-8ならば使用出来る。
+  Windowsでは、TeX Live 2014 に取り込んだ。
 ◎ 現在の配布に含んでいないもの
-euptex    TeXLive の Build/source/web2c で本配布の uptexdir の置き換えでOK
-  euptexdir 以下は新しい uptex との組合わせ可能で euptex が作成出来る。
-mendex    対応が難しいので当面(永久に?)放置。
-upmpost   uptex-0.30ではupjmpostの名前で、set3も含めて動いている。
-  ただし、日本語vfの領域を食い過ぎで多書体ができない。
-  uptex-1.xxの配布には含まない。
 xdvi      uptex-0.30ではset3も含めて動いている。無問題。
   uptex-1.xxの配布には含まない。
 dviout    set2の範囲では改造無しでフォントの設定のみでほぼ動いている。
@@ -483,16 +486,15 @@ utfパッケージ  uptex-0.30では動いている。
 < 周辺実装関連 >
 [2] ptexenc で合成文字を処理できるようにする。
 < dviware, 外部ソフト関連 >
-[3] upmpost のTeXLive対応。多書体が使えるようにする。
+[3] upmetapost で多書体が使えるようにする。
 [4] upbibtex で、jalpha.bst 使用時に
   一部のエントリーでeuc動作と同等にならない問題点の解決。
-[5] WindowsでUnicodeのファイル名を使えるようにしたい。
 < フォント、マクロ関連 >
-[6] JIS→Unicode→CID の変換をupjis?-?.vfなど
+[5] JIS→Unicode→CID の変換をupjis?-?.vfなど
   に対してうまくいく形にする。
   JIS X 0208集合の横組はよくなったが、縦組の約物はまだ上手くいかない。
   vf と標準の CMap だけでは限界があり、 CMapの整備が必要。
 < その他 >
-[7] ドキュメントの充実。
-[8] 英語ドキュメントを書く。
+[6] ドキュメントの充実。
+[7] 英語ドキュメントを書く。
 
