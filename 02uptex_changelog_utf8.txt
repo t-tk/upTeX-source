@@ -1,5 +1,33 @@
 ### ChangeLog / 変更履歴
 
+2012.04.29 Ver1.10-20120429a
+  TeXLive svn 26146 base
+  Build/source/texk/web2c/uptexdir:
+    * uptex-m.ch, uppltotf.ch uptftopl.ch, updvitype.ch, upbibtex.ch:
+      Update upTeX version number.
+    * uptex-m.ch, kanji.c:
+      Update reference of Unicode blocks to
+      "Blocks-6.1.0.txt Date: 2011-06-14, 18:26:00 GMT [KW, LI]"
+  Build/source/texk/makejvf:
+    * main.c:
+      Update upTeX version number.
+      Revise command line help messages.
+    * uniblock.c:
+      Update references.
+      "Blocks-6.1.0.txt Date: 2011-06-14, 18:26:00 GMT [KW, LI]"
+      cid2code.txt (Version 10/25/2010) for Adobe-CNS1-6
+      cid2code.txt (Version 10/29/2010) for Adobe-GB1-5
+      cid2code.txt (Version 02/04/2012) for Adobe-Japan1-6
+      cid2code.txt (Version 01/31/2012) for Adobe-Korea1-2
+  Master/texmf-dist/fonts/vf/uptex/jis/*.vf:
+      Update references.
+      "Blocks-6.1.0.txt Date: 2011-06-14, 18:26:00 GMT [KW, LI]"
+      cid2code.txt (Version 02/04/2012) for Adobe-Japan1-6
+  samples:
+    Update.
+  patch/*:
+    Remove.
+
 2012.01.18 Ver1.00-20120118a
   Master/texmf-dist/fonts/vf/uptex/jis/*.vf:
     * In Ver1.00-20120115a,

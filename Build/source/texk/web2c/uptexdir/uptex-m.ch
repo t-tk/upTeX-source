@@ -1,4 +1,4 @@
-% This is a change file for upTeX u1.00
+% This is a change file for upTeX u1.10
 % By Takuji Tanaka.
 %
 % (02/26/2007) TTK  upTeX u0.01
@@ -30,13 +30,14 @@
 % (01/31/2010) TTK  upTeX u0.29
 % (04/10/2010) TTK  upTeX u0.30
 % (01/15/2012) TTK  upTeX u1.00
+% (04/29/2012) TTK  upTeX u1.10
 
 @x upTeX: banner
   {printed when p\TeX\ starts}
 @y
   {printed when p\TeX\ starts}
 @#
-@d upTeX_version_string=='-u1.00' {current up\TeX\ version}
+@d upTeX_version_string=='-u1.10' {current up\TeX\ version}
 @#
 @d upTeX_version==pTeX_version_string,upTeX_version_string
 @d upTeX_banner=='This is upTeX, Version 3.1415926',upTeX_version
@@ -217,22 +218,22 @@ eqtb[enable_cjk_token_code]:=eqtb[cat_code_base];
 if (isinternalUPTEX) then begin
   { default: other_kchar }
   @t\hskip10pt@>kcat_code(@"0):=not_cjk;
-  @t\hskip10pt@>kcat_code(@"22):=hangul; { Hangul Jamo }
-  @+@t\1@>for k:=@"61 to @"63 do kcat_code(k):=kanji; { CJK Radicals Supplement .. Ideographic Description Characters }
-  @+@t\1@>for k:=@"65 to @"66 do kcat_code(k):=kana;  { Hiragana, Katakana }
-  @t\hskip10pt@>kcat_code(@"67):=kanji; { Bopomofo }
-  @t\hskip10pt@>kcat_code(@"68):=hangul; { Hangul Compatibility Jamo }
-  @+@t\1@>for k:=@"69 to @"6B do kcat_code(k):=kanji; { Kanbun .. CJK Strokes }
-  @t\hskip10pt@>kcat_code(@"6C):=kana; { Katakana Phonetic Extensions }
-  @t\hskip10pt@>kcat_code(@"6F):=kanji; { CJK Unified Ideographs Extension A }
-  @t\hskip10pt@>kcat_code(@"71):=kanji; { CJK Unified Ideographs }
-  @t\hskip10pt@>kcat_code(@"81):=hangul; { Hangul Jamo Extended-A }
-  @t\hskip10pt@>kcat_code(@"88):=hangul; { Hangul Syllables }
-  @t\hskip10pt@>kcat_code(@"89):=hangul; { Hangul Jamo Extended-B }
-  @t\hskip10pt@>kcat_code(@"8E):=kanji; { CJK Compatibility Ideographs }
-  { @t\hskip10pt@>kcat_code(@"97):=other_kchar; Halfwidth and Fullwidth Forms }
-  @t\hskip10pt@>kcat_code(@"B9):=kana; { Kana Supplement }
-  @+@t\1@>for k:=@"C9 to @"CC do kcat_code(k):=kanji; { CJK Unified Ideographs Extension B .. CJK Compatibility Ideographs Supplement }
+  @t\hskip10pt@>kcat_code(@"23):=hangul; { Hangul Jamo }
+  @+@t\1@>for k:=@"63 to @"65 do kcat_code(k):=kanji; { CJK Radicals Supplement .. Ideographic Description Characters }
+  @+@t\1@>for k:=@"67 to @"68 do kcat_code(k):=kana;  { Hiragana, Katakana }
+  @t\hskip10pt@>kcat_code(@"69):=kanji; { Bopomofo }
+  @t\hskip10pt@>kcat_code(@"6A):=hangul; { Hangul Compatibility Jamo }
+  @+@t\1@>for k:=@"6B to @"6D do kcat_code(k):=kanji; { Kanbun .. CJK Strokes }
+  @t\hskip10pt@>kcat_code(@"6E):=kana; { Katakana Phonetic Extensions }
+  @t\hskip10pt@>kcat_code(@"71):=kanji; { CJK Unified Ideographs Extension A }
+  @t\hskip10pt@>kcat_code(@"73):=kanji; { CJK Unified Ideographs }
+  @t\hskip10pt@>kcat_code(@"83):=hangul; { Hangul Jamo Extended-A }
+  @t\hskip10pt@>kcat_code(@"8B):=hangul; { Hangul Syllables }
+  @t\hskip10pt@>kcat_code(@"8C):=hangul; { Hangul Jamo Extended-B }
+  @t\hskip10pt@>kcat_code(@"91):=kanji; { CJK Compatibility Ideographs }
+  { @t\hskip10pt@>kcat_code(@"9A):=other_kchar; Halfwidth and Fullwidth Forms }
+  @t\hskip10pt@>kcat_code(@"C3):=kana; { Kana Supplement }
+  @+@t\1@>for k:=@"D4 to @"D7 do kcat_code(k):=kanji; { CJK Unified Ideographs Extension B .. CJK Compatibility Ideographs Supplement }
   @t\hskip10pt@>kcat_code(@"FE):=kana; { Fullwidth digit and latin alphabet }
   @t\hskip10pt@>kcat_code(@"FF):=kana; { Halfwidth katakana }
 end else begin
@@ -350,30 +351,20 @@ if ((kcp mod @'10)>0)and(nrestmultichr(kcp)>0) then p:=p-(kcp mod @'10);
 @z
 
 @x
-    begin  if (link(start)=null)and(check_kanji(info(start))) then {|wchar_token|}
-      begin cur_input:=input_stack[base_ptr-1];
-      s:=get_avail; info(s):=Lo(buffer[loc]);
-@y
-    begin  if (link(start)=null)and(check_kanji(info(start))) then {|wchar_token|}
-      begin cur_input:=input_stack[base_ptr-1];
-      s:=get_avail; info(s):=(buffer[loc] mod max_char_val);
-@z
-
-@x
   begin cur_chr:=buffer[loc]; incr(loc);
-    if multistrlen(stringcast(buffer), limit+1, loc-1)=2 then
-      begin cur_chr:=fromBUFF(stringcast(buffer), limit+1, loc-1);
+    if multistrlen(ustringcast(buffer), limit+1, loc-1)=2 then
+      begin cur_chr:=fromBUFF(ustringcast(buffer), limit+1, loc-1);
       cur_cmd:=kcat_code(kcatcodekey(cur_chr));
       incr(loc);
       end
     else reswitch: cur_cmd:=cat_code(cur_chr);
 @y
   begin
-    cur_chr:=fromBUFF(stringcast(buffer), limit, loc);
+    cur_chr:=fromBUFF(ustringcast(buffer), limit, loc);
     cur_cmd:=kcat_code(kcatcodekey(cur_chr));
-    if (multistrlen(stringcast(buffer), limit, loc)>1) and check_kcat_code(cur_cmd) then begin
+    if (multistrlen(ustringcast(buffer), limit, loc)>1) and check_kcat_code(cur_cmd) then begin
       if (cur_cmd=not_cjk) then cur_cmd:=other_kchar;
-      loc:=loc+multistrlen(stringcast(buffer), limit, loc) end
+      loc:=loc+multistrlen(ustringcast(buffer), limit, loc) end
     else begin
       cur_chr:=buffer[loc]; incr(loc);
       reswitch: cur_cmd:=cat_code(cur_chr);
@@ -403,19 +394,19 @@ hangul_code(skip_blanks),hangul_code(new_line),hangul_code(mid_kanji):
 
 @x
 else  begin k:=loc; cur_chr:=buffer[k]; incr(k);
-  if multistrlen(stringcast(buffer), limit+1, k-1)=2 then
-    begin cat:=kcat_code(kcatcodekey(fromBUFF(stringcast(buffer), limit+1, k-1))); incr(k);
+  if multistrlen(ustringcast(buffer), limit+1, k-1)=2 then
+    begin cat:=kcat_code(kcatcodekey(fromBUFF(ustringcast(buffer), limit+1, k-1))); incr(k);
     end
   else cat:=cat_code(cur_chr);
 start_cs:
   if (cat=letter)or(cat=kanji)or(cat=kana) then state:=skip_blanks
 @y
 else  begin k:=loc;
-  cur_chr:=fromBUFF(stringcast(buffer), limit, k);
+  cur_chr:=fromBUFF(ustringcast(buffer), limit, k);
   cat:=kcat_code(kcatcodekey(cur_chr));
-  if (multistrlen(stringcast(buffer), limit, k)>1) and check_kcat_code(cat) then begin
+  if (multistrlen(ustringcast(buffer), limit, k)>1) and check_kcat_code(cat) then begin
     if (cat=not_cjk) then cat:=other_kchar;
-    k:=k+multistrlen(stringcast(buffer), limit, k) end
+    k:=k+multistrlen(ustringcast(buffer), limit, k) end
   else begin {not multi-byte char}
     cur_chr:=buffer[k];
     cat:=cat_code(cur_chr);
@@ -433,17 +424,17 @@ start_cs:
 
 @x
 begin repeat cur_chr:=buffer[k]; incr(k);
-  if multistrlen(stringcast(buffer), limit+1, k-1)=2 then
-    begin cat:=kcat_code(kcatcodekey(fromBUFF(stringcast(buffer), limit+1, k-1))); incr(k);
+  if multistrlen(ustringcast(buffer), limit+1, k-1)=2 then
+    begin cat:=kcat_code(kcatcodekey(fromBUFF(ustringcast(buffer), limit+1, k-1))); incr(k);
     end
   else cat:=cat_code(cur_chr);
 @y
 begin repeat
-  cur_chr:=fromBUFF(stringcast(buffer), limit, k);
+  cur_chr:=fromBUFF(ustringcast(buffer), limit, k);
   cat:=kcat_code(kcatcodekey(cur_chr));
-  if (multistrlen(stringcast(buffer), limit, k)>1) and check_kcat_code(cat) then begin
+  if (multistrlen(ustringcast(buffer), limit, k)>1) and check_kcat_code(cat) then begin
     if (cat=not_cjk) then cat:=other_kchar;
-    k:=k+multistrlen(stringcast(buffer), limit, k) end
+    k:=k+multistrlen(ustringcast(buffer), limit, k) end
   else begin {not multi-byte char}
     cur_chr:=buffer[k];
     cat:=cat_code(cur_chr);
@@ -545,8 +536,8 @@ begin str_room(1);
 p:=temp_head; link(p):=null; k:=b;
 while k<pool_ptr do
   begin t:=so(str_pool[k]);
-  if multistrlen(stringcast(str_pool), pool_ptr, k)=2 then
-    begin t:=fromBUFF(stringcast(str_pool), pool_ptr, k); incr(k);
+  if multistrlen(ustringcast(str_pool), pool_ptr, k)=2 then
+    begin t:=fromBUFF(ustringcast(str_pool), pool_ptr, k); incr(k);
     end
   else if t=" " then t:=space_token
   else t:=other_token+t;
@@ -557,13 +548,13 @@ while k<pool_ptr do
 begin str_room(1);
 p:=temp_head; link(p):=null; k:=b;
 while k<pool_ptr do
-  begin t:=fromBUFF(stringcast(str_pool), pool_ptr, k);
+  begin t:=fromBUFF(ustringcast(str_pool), pool_ptr, k);
   cc:=kcat_code(kcatcodekey(t));
-  if (multistrlen(stringcast(str_pool), pool_ptr, k)>1)and
+  if (multistrlen(ustringcast(str_pool), pool_ptr, k)>1)and
        check_kcat_code(cc) then
     begin if (cc=not_cjk) then cc:=other_kchar;
 	  t:=t+cc*max_cjk_val;
-	  k:=k+multistrlen(stringcast(str_pool), pool_ptr, k)-1;
+	  k:=k+multistrlen(ustringcast(str_pool), pool_ptr, k)-1;
     end
   else begin t:=so(str_pool[k]);
     if t=" " then t:=space_token

@@ -1,5 +1,5 @@
 upTeX, upLaTeX  --- 内部unicode版 pTeX, pLaTeX の実装
-2012.01.15 Ver1.00
+2012.04.29 Ver1.10
 TANAKA, Takuji  KXD02663(at)nifty(dot)ne(dot)jp
 
 ◇ upTeX開発のねらい

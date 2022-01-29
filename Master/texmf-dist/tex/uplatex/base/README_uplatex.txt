@@ -62,6 +62,10 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #### ChangeLog
 
+uptex-1.10 [2012/04/29] TTK
+  * Update config/uplatex.ini to Tono-san's style.
+    Ref. http://oku.edu.mie-u.ac.jp/~okumura/texfaq/qa/31691.html
+
 uptex-1.00 [2012/01/15] TTK
   * re-package for upTeX/upLaTeX Ver.1.00 distribution.
 
