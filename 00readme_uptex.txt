@@ -1,6 +1,6 @@
 upTeX, upLaTeX  --- unicode version of ASCII pTeX, pLaTeX
-2012.04.29 Ver1.10
-TANAKA, Takuji
+2012.09.21 Ver1.11
+TANAKA, Takuji   KXD02663(at)nifty(dot)ne(dot)jp
 
 [ Contents ]
 00readme_uptex.txt :: This file
@@ -12,7 +12,7 @@ under bin/ :: utility
 under samples/ :: samples for test
 
 [ Building upTeX ]
-The sources work with TeXLive svn r26146 .
+The sources work with TeXLive svn r27750 .
 Ref. TeXLive and Subversion  http://www.tug.org/texlive/svn/
 
 [ Status ]

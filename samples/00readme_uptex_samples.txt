@@ -63,7 +63,7 @@ min10x.tfm, umin10x.tfm
 utfsmpl-uplatex.tex, otfsmpl-uplatex.tex, uotftest.tex
   : test for UTF / OTF (japanese-otf) package by psitau-san
 
-bkmk-jis.tex, bkmk-utf8.tex,
+bkmk-jis.tex, bkmk-utf8.tex, bkmk-docinfo.txt,
 box-euc.eps, box-jis.eps, box-sjis.eps, box-utf8.eps
   : test for includegraphics, eps
     test for bookmarks and convbkmk.rb

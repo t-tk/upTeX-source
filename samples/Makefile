@@ -10,9 +10,10 @@ UPMPOST = upmpost
 DVI2TTYJ = dvi2tty -J
 DVI2TTYA = dvi2tty -A
 DVI2TTYU = dvi2tty -U
-EUPLATEX = euplatex
+EUPLATEX = uplatex
 EPLATEX = platex
 CONVBKMK = convbkmk.rb -g
+CONVBKMKO = convbkmk.rb -g -o
 PS2PDF = ps2pdf
 
 all: misc kin widow uptex uplatex aozora adobe encswitch \
@@ -107,6 +108,7 @@ babel:
 	$(UPLATEX) cjk_babel
 	$(DVIPDFMX) cjk_babel
 	$(DVIPS) cjk_babel
+	$(DVI2TTYU) -Eu cjk_babel > cjk_babel.dvi2tty
 
 # It requires unicode package (utf.sty etc.).
 greek:
@@ -347,7 +349,7 @@ otf_platex:
 # It requires ruby.
 bkmk: bkmk_jis bkmk_utf8
 
-bkmk_jis:
+bkmk_jis: bkmk_docinfo
 	for en in jis ; do \
 	for up in platex uplatex-sjis uplatex-euc uplatex; do \
 		rm bkmk-$$en.aux bkmk-$$en.out ; \
@@ -356,6 +358,12 @@ bkmk_jis:
 		$$up "\def\withhyperref{dvipdfmx}\input" bkmk-$$en.tex ; \
 		mv bkmk-$$en.dvi bkmk-$$en-pd-$$up.dvi ; \
 		$(DVIPDFMX) bkmk-$$en-pd-$$up.dvi ; \
+		$$up "\def\withhyperref{dvipdfmx}\def\nocmap{true}\input" bkmk-$$en.tex ; \
+		$$up "\def\withhyperref{dvipdfmx}\def\nocmap{true}\input" bkmk-$$en.tex ; \
+		$(CONVBKMKO) bkmk-$$en.out ; \
+		$$up "\def\withhyperref{dvipdfmx}\def\nocmap{true}\input" bkmk-$$en.tex ; \
+		mv bkmk-$$en.dvi bkmk-$$en-pd2-$$up.dvi ; \
+		$(DVIPDFMX) bkmk-$$en-pd2-$$up.dvi ; \
 		$$up "\def\withhyperref{dvips}\input" bkmk-$$en.tex ; \
 		$$up "\def\withhyperref{dvips}\input" bkmk-$$en.tex ; \
 		mv bkmk-$$en.dvi bkmk-$$en-ps-$$up.dvi ; \
@@ -365,23 +373,33 @@ bkmk_jis:
 	done \
 	done
 
-bkmk_utf8:
+bkmk_utf8: bkmk_docinfo
 	for en in utf8; do \
 	for up in uplatex-utf8 uplatex; do \
 		rm bkmk-$$en.aux bkmk-$$en.out ; \
-		$$up bkmk-$$en.tex ; \
 		$$up "\def\withhyperref{dvipdfmx}\input" bkmk-$$en.tex ; \
 		$$up "\def\withhyperref{dvipdfmx}\input" bkmk-$$en.tex ; \
 		mv bkmk-$$en.dvi bkmk-$$en-pd-$$up.dvi ; \
 		$(DVIPDFMX) bkmk-$$en-pd-$$up.dvi ; \
+		$$up "\def\withhyperref{dvipdfmx}\def\nocmap{true}\input" bkmk-$$en.tex ; \
+		$$up "\def\withhyperref{dvipdfmx}\def\nocmap{true}\input" bkmk-$$en.tex ; \
+		$(CONVBKMKO) bkmk-$$en.out ; \
+		$$up "\def\withhyperref{dvipdfmx}\def\nocmap{true}\input" bkmk-$$en.tex ; \
+		mv bkmk-$$en.dvi bkmk-$$en-pd2-$$up.dvi ; \
+		$(DVIPDFMX) bkmk-$$en-pd2-$$up.dvi ; \
 		$$up "\def\withhyperref{dvips}\input" bkmk-$$en.tex ; \
 		$$up "\def\withhyperref{dvips}\input" bkmk-$$en.tex ; \
 		mv bkmk-$$en.dvi bkmk-$$en-ps-$$up.dvi ; \
 		$(DVIPS) bkmk-$$en-ps-$$up.dvi ; \
 		$(CONVBKMK) bkmk-$$en-ps-$$up.ps ; \
 		$(PS2PDF) bkmk-$$en-ps-$$up-convbkmk.ps ; \
+		rm bkmk-$$en.aux bkmk-$$en.out ; \
 	done \
 	done
+
+bkmk_docinfo: bkmk-docinfo.txt
+	cp bkmk-docinfo.txt bkmk-docinfo.out
+	$(CONVBKMKO) bkmk-docinfo.out
 
 consio: consio_ptex consio_uptex
 consio_ptex:
@@ -404,13 +422,13 @@ texxet_euplatex:
 	$(EUPLATEX) texxet-jis.tex ; \
 	mv texxet-jis.dvi texxet-jis-euplatex.dvi ; \
 	$(DVIPDFMX) texxet-jis-euplatex.dvi ; \
-	$(UPDVI2TTY) -w 62 -o texxet-jis-euplatex.dvi2tty -E u texxet-jis-euplatex.dvi
+	$(DVI2TTYU) -w 62 -o texxet-jis-euplatex.dvi2tty -E u texxet-jis-euplatex.dvi
 
 texxet_eplatex:
 	$(EPLATEX) texxet-jis.tex ; \
 	mv texxet-jis.dvi texxet-jis-eplatex.dvi ; \
 	$(DVIPDFMX) texxet-jis-eplatex.dvi ; \
-	$(UPDVI2TTY) -w 62 -o texxet-jis-eplatex.dvi2tty -E u texxet-jis-eplatex.dvi
+	$(DVI2TTYA) -w 62 -o texxet-jis-eplatex.dvi2tty -E u texxet-jis-eplatex.dvi
 
 # Following files are in the eptex distribution eptex-*.tar.bz2
 # eptexdoc.tex fam256p.tex fam256d.tex styles.tex

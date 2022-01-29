@@ -1,5 +1,5 @@
 upTeX, upLaTeX  --- 内部unicode版 pTeX, pLaTeX の実装
-2012.04.29 Ver1.10
+2012.09.21 Ver1.11
 TANAKA, Takuji  KXD02663(at)nifty(dot)ne(dot)jp
 
 ◇ upTeX開発のねらい
@@ -430,6 +430,12 @@ upjisr-h.tfmなど
   半角カナにも対応済。
 ukinsoku.tex  JIS X 0213 に対応した。
 convbkmk.rb   dvipsでのbookmark作成のためのrubyスクリプト。
+  さらに、out2uni相当動作の-oオプションも追加した。
+dvi2tty   TeXLive svn に r24634 あたりで取り込まれた。
+  dvi2tty の NTT JTeX/pTeX 対応版を upTeX 対応にした。
+  オプション -J を変更し、 -U, -E を新設した。
+  さらにT1,TS1,OT2,T2A,T2B,T2C,X2エンコーディング対応にしたので、
+  今回TeXLiveへの取り込みを提案する。
 ◎ TeXLive に取り込んでいただいたもの
 ptexenc  TeXLive svn に r23549〜r25028 あたりで取り込まれた。
   ほぼ動いているが、一部機能していないまま放置。
@@ -440,15 +446,16 @@ dvipdfmx  TeXLive svn に r24509 あたりで取り込まれた。
   set3も含めて動いている。
   ただし、set3で、「内部コードがUTF-32, CMapがUniXXX-UTF16」であること
   を仮定したハードコーディングになっているおり、柔軟性は乏しい。
-  bookmark 作成は UTF8-UCS2 の CMAP を必要とする。
-dvi2tty   TeXLive svn に r24634 あたりで取り込まれた。
-  dvi2tty の NTT JTeX/pTeX 対応版を upTeX 対応にした。
-  オプション -J を変更し、 -U, -E を新設した。
+  bookmark 作成は UTF8-UCS2, UTF8-UTF16 の CMAP または、
+  convbkmk.rbの-oオプションを必要とする。
 ◎ 別の配布で提供しているもの
 otfパッケージ  otfbeta-uptex-x.xx.tar.xz として別に公開した。
+  TeXLive svn に r25264 あたりで取り込まれた。
   動いている。しかし、プロポーショナル仮名には未対応。
   本文用 vf 作成のために mkjvf を Unicode 対応にして、
   vf を追加作成した。
+CMap UTF8-UTF16
+  TeXLive svn に r26540 で取り込まれた。
 ◎ 現在の配布に含んでいないもの
 euptex    TeXLive の Build/source/web2c で本配布の uptexdir の置き換えでOK
   euptexdir 以下は新しい uptex との組合わせ可能で euptex が作成出来る。
@@ -463,7 +470,9 @@ dviout    set2の範囲では改造無しでフォントの設定のみでほぼ
   OTFパッケージの \CID{} が Unicode 経由なのは、 pLaTeX と同様。
   http://oku.edu.mie-u.ac.jp/~okumura/texfaq/qa/51610.html
   http://oku.edu.mie-u.ac.jp/~okumura/texfaq/qa/51705.html
-  の問題点の御報告がある。dviout の修正法は?
+  の問題点の御報告がある。
+  開発版で修正案を取り入れていただいた。
+  (Ref. http://tug.org/svn/dviout?view=revision&revision=178 )
 utfパッケージ  uptex-0.30では動いている。
   uptex-1.xxの配布には含まない。
 
@@ -475,20 +484,15 @@ utfパッケージ  uptex-0.30では動いている。
 [2] ptexenc で合成文字を処理できるようにする。
 < dviware, 外部ソフト関連 >
 [3] upmpost のTeXLive対応。多書体が使えるようにする。
-[4] dviout でのさらなるテスト。
-  http://oku.edu.mie-u.ac.jp/~okumura/texfaq/qa/51610.html
-  http://oku.edu.mie-u.ac.jp/~okumura/texfaq/qa/51705.html
-  の問題点の御報告がある。dviout の修正法は?
-[5] upbibtex で、jalpha.bst 使用時に
+[4] upbibtex で、jalpha.bst 使用時に
   一部のエントリーでeuc動作と同等にならない問題点の解決。
-[6] WindowsでUnicodeのファイル名を使えるようにしたい。
+[5] WindowsでUnicodeのファイル名を使えるようにしたい。
 < フォント、マクロ関連 >
-[7] JIS→Unicode→CID の変換をupjis?-?.vfなど
+[6] JIS→Unicode→CID の変換をupjis?-?.vfなど
   に対してうまくいく形にする。
   JIS X 0208集合の横組はよくなったが、縦組の約物はまだ上手くいかない。
   vf と標準の CMap だけでは限界があり、 CMapの整備が必要。
-[8] pdf作成時、和文を含むしおりを検討。
 < その他 >
-[9] ドキュメントの充実。
-[10] 英語ドキュメントを書く。
+[7] ドキュメントの充実。
+[8] 英語ドキュメントを書く。
 

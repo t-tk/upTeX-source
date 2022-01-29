@@ -1,5 +1,28 @@
 ### ChangeLog / 変更履歴
 
+2012.09.21 Ver1.11-20120921a
+  TeXLive svn 27750 base
+  Build/source/texk/web2c/uptexdir:
+    * uptex-m.ch, uppltotf.ch uptftopl.ch, updvitype.ch, upbibtex.ch:
+      Update upTeX version number.
+    * uptex-m.ch:
+      Fix bug for \meaning\kchardef
+      (Thanks to Z.R. san)。
+  Build/source/texk/dvi2tty:
+    * A proposal "dvi2tty-5.4.0" with new features:
+      ** Support T1,TS1,OT2,T2A,T2B,T2C,X2 encodings.
+      ** Add utf8 output for the latin, cyrillic encodings and
+         OML,OMS encodings.
+  Master/source/fonts/uptex/jis:
+    * Move the position from Master/fonts/source/uptex/jis .
+  bin/convbkmk.rb:
+    Update to Ver0.07:
+      Fix bugs, Support escape sequences, Add -o option.
+  samples:
+    Update.
+  01uptex_doc_utf8.txt:
+    Update.
+
 2012.04.29 Ver1.10-20120429a
   TeXLive svn 26146 base
   Build/source/texk/web2c/uptexdir:
