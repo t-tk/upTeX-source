@@ -1,7 +1,7 @@
 ### ChangeLog / 変更履歴
 
 2026.02.15 Ver2.02-20260215a
-  TeXLive svn r73997 base
+  TeXLive svn r77176 base
   Build/source/texk/web2c/uptexdir:
     * uptex-m.ch, uptex_version.h:
       Bump upTeX version.
